@@ -30,20 +30,19 @@ def ID3(examples, default):
       hprior = -1 * temp * math.log(temp,2) - temp2 * math.log(temp2, 2)
         #IG=IG-1*temp*math.log(temp,2)
         #print(list(uniqueclasscount)[i])
-    print("H Prior is equal to", hprior)
+    #print("H Prior is equal to", hprior)
 
 
     for i in range(0, len(examples[0].items())-2):# i is number of attributes in each example
-        attributeValues = [] 
+        attributeValues = []
         attributeClass = []
         for j in range (0, len(examples) - 1):     # j is number of examples
                                                        # examples[1].items()[i][1] = value of attribute i
                                                        # examples[1].items()[i][0] = name of attribute i
-            #attributeValues.append(examples[j].items()[i][1])
-            #attributeClass.append(examples[j].items()[i][ ( len(examples[j].items() - 1) ) ])
+            attributeValues.append(examples[j].items()[i][1])
+            attributeClass.append(examples[j].items()[len(examples[j].items()) - 1][1])
+            print(attributeValues,attributeClass)
 
-            a = 2
-                
                 #IG=hprior-E(max(uniqueclasscount),len(classes))
 
 
