@@ -24,16 +24,28 @@ def ID3(examples, default):
 
     temp = max(uniqueclasscount)/float(len(examples))
     temp2 = 1 - temp
-    hprior = -1 * temp * math.log(temp,2) - temp2 * math.log(temp2, 2)
+<<<<<<< HEAD
+    if temp2 == 0:
+      hprior = -1 * temp * math.log(temp,2)
+    else:
+      hprior = -1 * temp * math.log(temp,2) - temp2 * math.log(temp2, 2)
         #IG=IG-1*temp*math.log(temp,2)
         #print(list(uniqueclasscount)[i])
     print("H Prior is equal to", hprior)
 
-    for i in range (0, len(examples))
-        for j in range(0, len(examples[i].items()[1])-2):
-            for k in range(0, set(examples[i].items()[j])):
+
+    for i in range(0, len(examples[0].items())-2):# i is number of attributes in each example
+        attributeValues = [] 
+        attributeClass = []
+        for j in range (0, len(examples) - 1):     # j is number of examples
+                                                       # examples[1].items()[i][1] = value of attribute i
+                                                       # examples[1].items()[i][0] = name of attribute i
+            #attributeValues.append(examples[j].items()[i][1])
+            #attributeClass.append(examples[j].items()[i][ ( len(examples[j].items() - 1) ) ])
+
+            a = 2
                 
-                IG=hprior-E(max(uniqueclasscount),len(classes))
+                #IG=hprior-E(max(uniqueclasscount),len(classes))
 
 
     #print(uniqueclass)
@@ -41,6 +53,15 @@ def ID3(examples, default):
     #for i in range(0, len(examples[0].items())):
         #print(examples[1].items()[i][1])
         #print(set(examples[1].items()))
+=======
+    print(temp, temp2)
+    if temp2==0:
+        hprior= temp * math.log(temp,2)
+    else:
+        hprior = temp * math.log(temp,2) - temp2 * math.log(temp2, 2)
+    print("H Prior is equal to", hprior)
+    #IG=hprior-E(max(uniqueclasscount),len(classes))
+>>>>>>> 4241ca359813c2746d81696050f70943ac7555c9
 
 #      Takes in an array of examples, and returns a tree (an instance of Node)
 #      trained on the examples.  Each example is a dictionary of attribute:value pairs,
