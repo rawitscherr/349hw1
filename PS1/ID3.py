@@ -6,6 +6,7 @@ def ID3(examples, default):
     numExamples = len(examples)
     for i in range(0, numExamples):
         classes.append(examples[i].items()[len(examples[i].items())-1])
+
     uniqueclass = []      # set of unique classifications
     uniqueclasscount = [] # list containing counts of corresponding classifications in uniqueclass list
                         # used for caluclating MODE(classes) 
@@ -21,6 +22,7 @@ def ID3(examples, default):
         uniqueclasscount.append(counter)
     IG = 0
     #II=uniqueclasscount.index(max(uniqueclasscount))
+
     temp = max(uniqueclasscount)/float(len(examples))
     temp2 = 1 - temp
     hprior = -1 * temp * math.log(temp,2) - temp2 * math.log(temp2, 2)
