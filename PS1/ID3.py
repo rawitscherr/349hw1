@@ -15,7 +15,7 @@ def ID3(examples, default):
         uniqueclass.append(list(set(classes))[i][1])
         uniqueclasscount.append(counter)
 
-    print(uniqueclass[1])
+    print(uniqueclass)
     print(uniqueclasscount)
     #for i in range(0, len(examples[0].items())):
         #print(examples[1].items()[i][1])
