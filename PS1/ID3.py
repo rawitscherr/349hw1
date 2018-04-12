@@ -7,7 +7,6 @@ def ID3(examples, default):
         classes.append(examples[i].items()[len(examples[i].items())-1])
     uniqueclass=[]
     uniqueclasscount=[]
-    a = 2
     for i in range(0, len(set(classes))):
         counter=0
         for j in range(0, len(classes)):
@@ -19,7 +18,7 @@ def ID3(examples, default):
     #II=uniqueclasscount.index(max(uniqueclasscount))
     temp=max(uniqueclasscount)/float(len(examples))
     temp2=1-temp
-    hprior=-1*temp*math.log(temp,2)-1*temp2*math.log(temp2,2)
+    hprior=-temp*math.log(temp,2)-temp2*math.log(temp2,2)
         #IG=IG-1*temp*math.log(temp,2)
         #print(list(uniqueclasscount)[i])
     print("H Prior is equal to", hprior)
