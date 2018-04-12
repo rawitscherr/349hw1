@@ -29,9 +29,11 @@ def ID3(examples, default):
         #print(list(uniqueclasscount)[i])
     print("H Prior is equal to", hprior)
 
-    for i in range(0, len(examples.items()[1])-2):
-        for i in
-        IG=hprior-E(max(uniqueclasscount),len(classes))
+    for i in range (0, len(examples))
+        for j in range(0, len(examples[i].items()[1])-2):
+            for k in range(0, set(examples[i].items()[j])):
+                
+                IG=hprior-E(max(uniqueclasscount),len(classes))
 
 
     #print(uniqueclass)
