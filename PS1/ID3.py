@@ -18,11 +18,12 @@ def ID3(examples, default):
     #II=uniqueclasscount.index(max(uniqueclasscount))
     temp=max(uniqueclasscount)/float(len(examples))
     temp2=1-temp
-    print(temp, temp2)
     hprior=-1*temp*math.log(temp,2)-1*temp2*math.log(temp2,2)
         #IG=IG-1*temp*math.log(temp,2)
         #print(list(uniqueclasscount)[i])
     print("H Prior is equal to", hprior)
+
+
     #print(uniqueclass)
     #print(uniqueclasscount)
     #for i in range(0, len(examples[0].items())):
