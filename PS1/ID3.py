@@ -25,22 +25,12 @@ def ID3(examples, default):
     temp = max(uniqueclasscount)/float(len(examples))
     temp2 = 1 - temp
     hprior = -1 * temp * math.log(temp,2) - temp2 * math.log(temp2, 2)
-        #IG=IG-1*temp*math.log(temp,2)
-        #print(list(uniqueclasscount)[i])
     print("H Prior is equal to", hprior)
 
-    for i in range (0, len(examples))
-        for j in range(0, len(examples[i].items()[1])-2):
-            for k in range(0, set(examples[i].items()[j])):
-                
-                IG=hprior-E(max(uniqueclasscount),len(classes))
-
-
-    #print(uniqueclass)
-    #print(uniqueclasscount)
+    #IG=hprior-E(max(uniqueclasscount),len(classes))
     #for i in range(0, len(examples[0].items())):
-        #print(examples[1].items()[i][1])
-        #print(set(examples[1].items()))
+    #print(examples[1].items()[i][1])
+    #print(set(examples[1].items()))
 
 #      Takes in an array of examples, and returns a tree (an instance of Node)
 #      trained on the examples.  Each example is a dictionary of attribute:value pairs,
