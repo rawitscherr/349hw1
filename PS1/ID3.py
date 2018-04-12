@@ -2,24 +2,28 @@ from node import Node
 import math
 
 def ID3(examples, default):
-    classes=[]
-    for i in range(0,len(examples)):
+    classes = []
+    numExamples = len(examples)
+    for i in range(0, numExamples):
         classes.append(examples[i].items()[len(examples[i].items())-1])
-    uniqueclass=[]
-    uniqueclasscount=[]
-    a = 2
-    for i in range(0, len(set(classes))):
-        counter=0
-        for j in range(0, len(classes)):
+    uniqueclass = []      # set of unique classifications
+    uniqueclasscount = [] # list containing counts of corresponding classifications in uniqueclass list
+                        # used for caluclating MODE(classes) 
+    
+    numUniqueClasses = len(set(classes))
+
+    for i in range(0, numUniqueClasses):
+        counter = 0
+        for j in range(0, numExamples):
             if  list(set(classes))[i] == list(classes)[j]:
-                counter=counter+1
+                counter = counter+1
         uniqueclass.append(list(set(classes))[i][1])
         uniqueclasscount.append(counter)
-    IG=0
+    IG = 0
     #II=uniqueclasscount.index(max(uniqueclasscount))
-    temp=max(uniqueclasscount)/float(len(examples))
-    temp2=1-temp
-    hprior=-1*temp*math.log(temp,2)-1*temp2*math.log(temp2,2)
+    temp = max(uniqueclasscount)/float(len(examples))
+    temp2 = 1 - temp
+    hprior = -1 * temp * math.log(temp,2) - temp2 * math.log(temp2, 2)
         #IG=IG-1*temp*math.log(temp,2)
         #print(list(uniqueclasscount)[i])
     print("H Prior is equal to", hprior)
