@@ -9,8 +9,8 @@ def ID3(examples, default):
 
     uniqueclass = []      # set of unique classifications
     uniqueclasscount = [] # list containing counts of corresponding classifications in uniqueclass list
-                        # used for caluclating MODE(classes) 
-    
+                        # used for caluclating MODE(classes)
+
     numUniqueClasses = len(set(classes))
 
     for i in range(0, numUniqueClasses):
@@ -20,7 +20,6 @@ def ID3(examples, default):
                 counter = counter+1
         uniqueclass.append(list(set(classes))[i][1])
         uniqueclasscount.append(counter)
-    IG = 0
     #II=uniqueclasscount.index(max(uniqueclasscount))
 
     temp = max(uniqueclasscount)/float(len(examples))
@@ -29,6 +28,10 @@ def ID3(examples, default):
         #IG=IG-1*temp*math.log(temp,2)
         #print(list(uniqueclasscount)[i])
     print("H Prior is equal to", hprior)
+
+    for i in range(0, len(examples.items()[1])-2):
+        for i in
+        IG=hprior-E(max(uniqueclasscount),len(classes))
 
 
     #print(uniqueclass)
@@ -65,6 +68,13 @@ def findbest(node, examples):
     for i in range(0, len(examples[0].items())):
         if IG1>IG0:
             x=x+1
+
+def entropy(x,y):
+    temp = x/(x+y)
+    temp2 = 1 - temp
+    return -temp * math.log(temp,2) - temp2 * math.log(temp2, 2)
+
+
 
 def prune(node, examples):
   '''
