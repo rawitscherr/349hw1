@@ -7,7 +7,7 @@ def ID3(examples, default):
         classes.append(examples[i].items()[len(examples[i].items())-1])
     uniqueclass=[]
     uniqueclasscount=[]
-    a = 3
+    a = 2
     for i in range(0, len(set(classes))):
         counter=0
         for j in range(0, len(classes)):
