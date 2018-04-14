@@ -7,9 +7,9 @@ def ID3(examples, default):
     for i in range(0, numExamples):
         classes.append(examples[i].items()[len(examples[i].items())-1])
 
-    uniqueclass = []      # set of unique classifications
-    uniqueclasscount = [] # list containing counts of corresponding classifications in uniqueclass list
-                        # used for caluclating MODE(classes)
+    uniqueclass = []        # set of unique classifications
+    uniqueclasscount = []   # list containing counts of corresponding classifications in uniqueclass list
+                            # used for caluclating MODE(classes)
 
     numUniqueClasses = len(set(classes))
 
@@ -20,7 +20,6 @@ def ID3(examples, default):
                 counter = counter+1
         uniqueclass.append(list(set(classes))[i][1])
         uniqueclasscount.append(counter)
-    #II=uniqueclasscount.index(max(uniqueclasscount))
 
     temp = max(uniqueclasscount)/float(len(examples))
     temp2 = 1 - temp
@@ -28,10 +27,6 @@ def ID3(examples, default):
       hprior = -1 * temp * math.log(temp,2)
     else:
       hprior = -1 * temp * math.log(temp,2) - temp2 * math.log(temp2, 2)
-        #IG=IG-1*temp*math.log(temp,2)
-        #print(list(uniqueclasscount)[i])
-    #print("H Prior is equal to", hprior)
-
 
     for i in range(0, len(examples[0].items())-1):# i is number of attributes in each example
         attributeValues = []
@@ -43,14 +38,6 @@ def ID3(examples, default):
             attributeClass.append(examples[j].items()[len(examples[j].items()) - 1][1])
         print(attributename,attributeValues,'class', attributeClass)
 
-                #IG=hprior-E(max(uniqueclasscount),len(classes))
-
-
-    #print(uniqueclass)
-    #print(uniqueclasscount)
-    #for i in range(0, len(examples[0].items())):
-        #print(examples[1].items()[i][1])
-        #print(set(examples[1].items())
 
 #      Takes in an array of examples, and returns a tree (an instance of Node)
 #      trained on the examples.  Each example is a dictionary of attribute:value pairs,
