@@ -38,10 +38,10 @@ def ID3(examples, default):
         attributeClass = []
         for j in range (0, len(examples) - 1):     # j is number of examples
                                                        # examples[1].items()[i][1] = value of attribute i
-                                                       # examples[1].items()[i][0] = name of attribute i
+            attributename=examples[1].items()[i][0] #= name of attribute i
             attributeValues.append(examples[j].items()[i][1])
             attributeClass.append(examples[j].items()[len(examples[j].items()) - 1][1])
-            print(attributeValues,attributeClass)
+            print(attributename,attributeValues,'class', attributeClass)
 
                 #IG=hprior-E(max(uniqueclasscount),len(classes))
 
