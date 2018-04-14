@@ -2,12 +2,6 @@ from node import Node
 import math
 
 def ID3(examples, default):
-    temp = max(uniqueclasscount)/float(len(examples))
-    temp2 = 1 - temp
-    if temp2 == 0:
-      hprior = -1 * temp * math.log(temp,2)
-    else:
-      hprior = -1 * temp * math.log(temp,2) - temp2 * math.log(temp2, 2)
 
     entropies=[]
     for i in range(0, len(examples[0].items())-1):# i is number of attributes in each example
@@ -19,8 +13,10 @@ def ID3(examples, default):
             attributeValues.append(examples[j].items()[i][1])
             attributeClass.append(examples[j].items()[len(examples[j].items()) - 1][1])
         #print(attributename,attributeValues,'class', attributeClass)
-
-    print(classcount(examples))
+    one,two=classcount(examples)
+    print(one,two)
+    three=returnmaxclass(one,two)
+    print(three)
 
             #x=max(uniqueclasscount)
             #y=sum(uniqueclasscount)-x
@@ -78,7 +74,17 @@ def findbest(node, examples):
 def entropy(x,y):
     temp = x/(x+y)
     temp2 = 1 - temp
-    return -temp * math.log(temp,2) - temp2 * math.log(temp2, 2)
+    if temp2 == 0:
+      hprior = -1 * temp * math.log(temp,2)
+    else:
+      hprior = -1 * temp * math.log(temp,2) - temp2 * math.log(temp2, 2)
+    return hprior
+
+def returnmaxclass(uniqueclass, uniqueclasscount):
+    x=uniqueclasscount.index(max(uniqueclasscount))
+    maxclass=uniqueclass[x]
+    return maxclass
+
 
 
 
