@@ -14,9 +14,13 @@ def ID3(examples, default):
             attributeClass.append(examples[j].items()[len(examples[j].items()) - 1][1])
         #print(attributename,attributeValues,'class', attributeClass)
     one,two=classcount(examples)
-    print(one,two)
+    #print(one,two)
     three=returnmaxclass(one,two)
-    print(three)
+    #print(three)
+    #print(max(two), sum(two))
+    a=entropy(max(two),sum(two))
+    #print(a)
+
 
             #x=max(uniqueclasscount)
             #y=sum(uniqueclasscount)-x
@@ -72,12 +76,13 @@ def findbest(node, examples):
             x=x+1
 
 def entropy(x,y):
-    temp = x/(x+y)
-    temp2 = 1 - temp
+    temp1 = float(x/float(y))
+    temp2 = float(1 - temp1)
     if temp2 == 0:
-      hprior = -1 * temp * math.log(temp,2)
+      hprior = temp1 * math.log(temp1,2)
     else:
-      hprior = -1 * temp * math.log(temp,2) - temp2 * math.log(temp2, 2)
+        hprior = temp1 * math.log(temp1,2) + temp2 * math.log(temp2, 2)
+        #hprior=math.log(temp1,2)
     return hprior
 
 def returnmaxclass(uniqueclass, uniqueclasscount):
