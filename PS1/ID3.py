@@ -1,7 +1,7 @@
 from node import Node
 import math
 
-def ID3(examples, default):
+def ID4(examples, default):
 #      Takes in an array of examples, and returns a tree (an instance of Node)
 #      trained on the examples.  Each example is a dictionary of attribute:value pairs,
 #      and the target class variable is a special attribute with the name "Class".
@@ -102,3 +102,77 @@ def evaluate(node, example):
   Takes in a tree and one example.  Returns the Class value that the tree
   assigns to the example.
   '''
+
+
+
+
+
+
+def ID3(examples, default):
+#      Takes in an array of examples, and returns a tree (an instance of Node)
+#      trained on the examples.  Each example is a dictionary of attribute:value pairs,
+#      and the target class variable is a special attribute with the name "Class".
+#      Any missing attributes are denoted with a value of "?"
+    
+
+
+
+    uniqueclass, uniqueclasscount = classcount(examples)
+    classMODE = returnmaxclass(uniqueclass, uniqueclasscount)
+    newDefault = classMODE
+
+    
+    entropies = []
+    for i in range(0, len(examples[0].items())-1): # i is number of attributes in each example
+        attributeValues = []
+        attributeClass = []
+        for j in range (0, len(examples)):     # j is number of examples
+                                                       
+            attributename = examples[1].items()[i][0] 
+            attributeValues.append(examples[j].items()[i][1])
+            attributeClass.append(examples[j].items()[len(examples[j].items()) - 1][1])
+
+        for j in range (0, len(attributeValues)): # for each distinct value of attribute i (ex: all the cases where a = 1)
+          # find most common classification among cases where (a = 1)
+          listofcases = []
+          for k in range(0, len(examples)):
+            if attributeValues[j] == examples[k].items()[j][1]:
+              listofcases.append(examples(i))
+
+            uninquecases = set(listofcases)
+            x, y = classcount(listofcases)
+            MODE = returnmaxclass(x,y)
+            entropies.append(entropy(max(y),sum(y)))
+
+
+              
+
+        print(attributename,attributeValues,'class', attributeClass)
+
+
+
+
+
+
+
+    one,two=classcount(examples)
+    #print(one,two)
+    three=returnmaxclass(one,two)
+    #print(three)
+    #print(max(two), sum(two))
+    a=entropy(max(two),sum(two))
+    #print(a)
+
+    if examples == None:
+        return default
+    elif examples.count('Class' in examples[0]) == len(examples) or 'a':
+        return default
+    else:
+        infogain=0
+
+        print( examples.items())
+        tree= Node()
+        tree.label=tree
+        return default
+
+
