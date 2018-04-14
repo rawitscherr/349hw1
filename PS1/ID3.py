@@ -28,6 +28,7 @@ def ID3(examples, default):
     else:
       hprior = -1 * temp * math.log(temp,2) - temp2 * math.log(temp2, 2)
 
+    entropies=[]
     for i in range(0, len(examples[0].items())-1):# i is number of attributes in each example
         attributeValues = []
         attributeClass = []
@@ -36,7 +37,11 @@ def ID3(examples, default):
             attributename=examples[1].items()[i][0] #= name of attribute i
             attributeValues.append(examples[j].items()[i][1])
             attributeClass.append(examples[j].items()[len(examples[j].items()) - 1][1])
-        print(attributename,attributeValues,'class', attributeClass)
+        #print(attributename,attributeValues,'class', attributeClass)
+
+
+            #x=max(uniqueclasscount)
+            #y=sum(uniqueclasscount)-x
 
 
 #      Takes in an array of examples, and returns a tree (an instance of Node)
