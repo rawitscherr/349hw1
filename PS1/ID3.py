@@ -2,7 +2,10 @@ from node import Node
 import math
 
 def ID3(examples, default):
-
+#      Takes in an array of examples, and returns a tree (an instance of Node)
+#      trained on the examples.  Each example is a dictionary of attribute:value pairs,
+#      and the target class variable is a special attribute with the name "Class".
+#      Any missing attributes are denoted with a value of "?"
     entropies=[]
     for i in range(0, len(examples[0].items())-1):# i is number of attributes in each example
         attributeValues = []
@@ -12,7 +15,7 @@ def ID3(examples, default):
             attributename=examples[1].items()[i][0] #= name of attribute i
             attributeValues.append(examples[j].items()[i][1])
             attributeClass.append(examples[j].items()[len(examples[j].items()) - 1][1])
-        #print(attributename,attributeValues,'class', attributeClass)
+        print(attributename,attributeValues,'class', attributeClass)
     one,two=classcount(examples)
     #print(one,two)
     three=returnmaxclass(one,two)
@@ -20,16 +23,6 @@ def ID3(examples, default):
     #print(max(two), sum(two))
     a=entropy(max(two),sum(two))
     #print(a)
-
-
-            #x=max(uniqueclasscount)
-            #y=sum(uniqueclasscount)-x
-
-
-#      Takes in an array of examples, and returns a tree (an instance of Node)
-#      trained on the examples.  Each example is a dictionary of attribute:value pairs,
-#      and the target class variable is a special attribute with the name "Class".
-#      Any missing attributes are denoted with a value of "?"
 
     if examples == None:
         return default
@@ -49,11 +42,9 @@ def classcount(examples):
     numExamples = len(examples)
     for i in range(0, numExamples):
         classes.append(examples[i].items()[len(examples[i].items())-1])
-
     uniqueclass = []        # set of unique classifications
     uniqueclasscount = []   # list containing counts of corresponding classifications in uniqueclass list
                             # used for caluclating MODE(classes)
-
     numUniqueClasses = len(set(classes))
 
     for i in range(0, numUniqueClasses):
