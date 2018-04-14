@@ -2,25 +2,6 @@ from node import Node
 import math
 
 def ID3(examples, default):
-    classes = []
-    numExamples = len(examples)
-    for i in range(0, numExamples):
-        classes.append(examples[i].items()[len(examples[i].items())-1])
-
-    uniqueclass = []        # set of unique classifications
-    uniqueclasscount = []   # list containing counts of corresponding classifications in uniqueclass list
-                            # used for caluclating MODE(classes)
-
-    numUniqueClasses = len(set(classes))
-
-    for i in range(0, numUniqueClasses):
-        counter = 0
-        for j in range(0, numExamples):
-            if  list(set(classes))[i] == list(classes)[j]:
-                counter = counter+1
-        uniqueclass.append(list(set(classes))[i][1])
-        uniqueclasscount.append(counter)
-
     temp = max(uniqueclasscount)/float(len(examples))
     temp2 = 1 - temp
     if temp2 == 0:
@@ -39,6 +20,7 @@ def ID3(examples, default):
             attributeClass.append(examples[j].items()[len(examples[j].items()) - 1][1])
         #print(attributename,attributeValues,'class', attributeClass)
 
+    print(classcount(examples))
 
             #x=max(uniqueclasscount)
             #y=sum(uniqueclasscount)-x
@@ -62,6 +44,26 @@ def ID3(examples, default):
         return default
 
 
+def classcount(examples):
+    classes = []
+    numExamples = len(examples)
+    for i in range(0, numExamples):
+        classes.append(examples[i].items()[len(examples[i].items())-1])
+
+    uniqueclass = []        # set of unique classifications
+    uniqueclasscount = []   # list containing counts of corresponding classifications in uniqueclass list
+                            # used for caluclating MODE(classes)
+
+    numUniqueClasses = len(set(classes))
+
+    for i in range(0, numUniqueClasses):
+        counter = 0
+        for j in range(0, numExamples):
+            if  list(set(classes))[i] == list(classes)[j]:
+                counter = counter+1
+        uniqueclass.append(list(set(classes))[i][1])
+        uniqueclasscount.append(counter)
+    return uniqueclass, uniqueclasscount
 
 def findbest(node, examples):
     x=0
