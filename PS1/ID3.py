@@ -1,7 +1,7 @@
 from node import Node
 import math
 
-def ID4(examples, default):
+def ID3(examples, default):
 #      Takes in an array of examples, and returns a tree (an instance of Node)
 #      trained on the examples.  Each example is a dictionary of attribute:value pairs,
 #      and the target class variable is a special attribute with the name "Class".
@@ -15,7 +15,7 @@ def ID4(examples, default):
             attributename=examples[1].items()[i][0] #= name of attribute i
             attributeValues.append(examples[j].items()[i][1])
             attributeClass.append(examples[j].items()[len(examples[j].items()) - 1][1])
-        print(attributename,attributeValues,'class', attributeClass)
+        #print(attributename,attributeValues,'class', attributeClass)
     one,two=classcount(examples)
     #print(one,two)
     three=returnmaxclass(one,two)
@@ -23,6 +23,31 @@ def ID4(examples, default):
     #print(max(two), sum(two))
     a=entropy(max(two),sum(two))
     #print(a)
+
+    allentropies=[]
+    for i in range(0,len(examples[0].items())-1):
+        attvalues=[]
+        attnum=i
+        for j in range(0,len(examples)):
+            attvalues.append(examples[j].items()[i][1])
+        uniqueatt=list(set(attvalues))
+        entropies=[]
+        for j in range(0,len(uniqueatt)):
+            ex=attexamples(attnum,uniqueatt[j],examples)
+            x,y=classcount(ex)
+            #print(ex,x,y)
+            ax=returnmaxclass(x,y)
+            #print(ax, sum(y))
+            entropies.append(entropy(ax,sum(y)))
+            #print(entropies)
+        entrope=sum(entropies)
+        allentropies.append(entrope)
+    print(allentropies)
+    bestsplit=max(allentropies)
+    ind=allentropies.index(bestsplit)
+    print(examples[0].items()[ind][0])
+
+
 
     if examples == None:
         return default
@@ -76,8 +101,8 @@ def entropy(x,y):
 
 def returnmaxclass(uniqueclass, uniqueclasscount):
     x=uniqueclasscount.index(max(uniqueclasscount))
-    maxclass=uniqueclass[x]
-    return maxclass
+    maxclassnum=uniqueclasscount[x]
+    return maxclassnum
 
 
 
@@ -106,7 +131,7 @@ def evaluate(node, example):
 
 
 
-def ID3(examples, default):
+def ID4(examples, default):
 #      Takes in an array of examples, and returns a tree (an instance of Node)
 #      trained on the examples.  Each example is a dictionary of attribute:value pairs,
 #      and the target class variable is a special attribute with the name "Class".
