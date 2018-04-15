@@ -56,15 +56,13 @@ def classcount(examples):
         uniqueclasscount.append(counter)
     return uniqueclass, uniqueclasscount
 
-def findbest(node, examples):
-    x=0
-    for i in range(0,len(set(new_words))):
-        x=x+1
-    IG0=x
-    print(IG0)
-    for i in range(0, len(examples[0].items())):
-        if IG1>IG0:
-            x=x+1
+def attexamples(attribute,value,examples):
+    attex=[]
+    for i in range(0,len(examples)):
+        if value==examples[i].items()[attribute][1]:
+            attex.append(examples[i])
+        #print(i,examples[i])
+    return attex
 
 def entropy(x,y):
     temp1 = float(x/float(y))
@@ -113,7 +111,7 @@ def ID3(examples, default):
 #      trained on the examples.  Each example is a dictionary of attribute:value pairs,
 #      and the target class variable is a special attribute with the name "Class".
 #      Any missing attributes are denoted with a value of "?"
-    
+
 
 
 
@@ -121,14 +119,14 @@ def ID3(examples, default):
     classMODE = returnmaxclass(uniqueclass, uniqueclasscount)
     newDefault = classMODE
 
-    
+
     entropies = []
     for i in range(0, len(examples[0].items())-1): # i is number of attributes in each example
         attributeValues = []
         attributeClass = []
+        attributename = examples[1].items()[i][0]
+
         for j in range (0, len(examples)):     # j is number of examples
-                                                       
-            attributename = examples[1].items()[i][0] 
             attributeValues.append(examples[j].items()[i][1])
             attributeClass.append(examples[j].items()[len(examples[j].items()) - 1][1])
 
@@ -136,18 +134,22 @@ def ID3(examples, default):
           # find most common classification among cases where (a = 1)
           listofcases = []
           for k in range(0, len(examples)):
-            if attributeValues[j] == examples[k].items()[j][1]:
-              listofcases.append(examples(i))
 
-            uninquecases = set(listofcases)
-            x, y = classcount(listofcases)
-            MODE = returnmaxclass(x,y)
-            entropies.append(entropy(max(y),sum(y)))
+            #print(attributeValues[j], examples[k].items()[i][1])
+            if attributeValues[j] == examples[k].items()[i][1]:
+              listofcases.append(examples[i])
+            #print(i,j,k,listofcases)
+            #uninquecases = set(listofcases)
+            #x, y = classcount(listofcases)
+            #MODE = returnmaxclass(x,y)
+            #entropies.append(entropy(max(y),sum(y)))
+    v=attexamples(0,1,examples)
+    print(v)
 
 
-              
 
-        print(attributename,attributeValues,'class', attributeClass)
+
+        #print(attributename,attributeValues,'class', attributeClass)
 
 
 
@@ -174,5 +176,3 @@ def ID3(examples, default):
         tree= Node()
         tree.label=tree
         return default
-
-
