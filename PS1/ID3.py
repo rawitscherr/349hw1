@@ -8,7 +8,8 @@ def ID3(examples, default):
 #      Any missing attributes are denoted with a value of "?"
 
     findbest(examples)
-    if examples == None:
+    if examples == None or len(examples[0].items())==1:
+        default=examples[0].items()[0][1]
         return default
     elif examples.count('Class' in examples[0]) == len(examples[0].items()): #need to check for no nontrivial splits
         return default
@@ -31,6 +32,7 @@ def ID3(examples, default):
                 ates[j].pop(bestname,None)
             #ID3(ates,default)
             print(ates)
+            ID3(ates,default)
         #print(prop)
         return tree
 
