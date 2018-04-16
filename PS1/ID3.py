@@ -10,7 +10,7 @@ def ID3(examples, default):
     findbest(examples)
     if examples == None:
         return default
-    elif examples.count('Class' in examples[0]) == len(examples[0].items()):
+    elif examples.count('Class' in examples[0]) == len(examples[0].items()): #need to check for no nontrivial splits
         return default
     else:
         best,entropies=findbest(examples)
