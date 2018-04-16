@@ -6,61 +6,37 @@ def ID3(examples, default):
 #      trained on the examples.  Each example is a dictionary of attribute:value pairs,
 #      and the target class variable is a special attribute with the name "Class".
 #      Any missing attributes are denoted with a value of "?"
-    entropies=[]
-    for i in range(0, len(examples[0].items())-1):# i is number of attributes in each example
-        attributeValues = []
-        attributeClass = []
-        for j in range (0, len(examples)):     # j is number of examples
-                                                       # examples[1].items()[i][1] = value of attribute i
-            attributename=examples[1].items()[i][0] #= name of attribute i
-            attributeValues.append(examples[j].items()[i][1])
-            attributeClass.append(examples[j].items()[len(examples[j].items()) - 1][1])
-        #print(attributename,attributeValues,'class', attributeClass)
-    one,two=classcount(examples)
-    #print(one,two)
-    three=returnmaxclass(one,two)
-    #print(three)
-    #print(max(two), sum(two))
-    a=entropy(max(two),sum(two))
-    #print(a)
 
-    allentropies=[]
-    for i in range(0,len(examples[0].items())-1):
-        attvalues=[]
-        attnum=i
-        for j in range(0,len(examples)):
-            attvalues.append(examples[j].items()[i][1])
-        uniqueatt=list(set(attvalues))
-        entropies=[]
-        for j in range(0,len(uniqueatt)):
-            ex=attexamples(attnum,uniqueatt[j],examples)
-            x,y=classcount(ex)
-            #print(ex,x,y)
-            ax=returnmaxclass(x,y)
-            #print(ax, sum(y))
-            entropies.append(entropy(ax,sum(y)))
-            #print(entropies)
-        entrope=sum(entropies)
-        allentropies.append(entrope)
-    print(allentropies)
-    bestsplit=max(allentropies)
-    ind=allentropies.index(bestsplit)
-    print(examples[0].items()[ind][0])
-
-
-
+    findbest(examples)
     if examples == None:
         return default
-    elif examples.count('Class' in examples[0]) == len(examples) or 'a':
+    elif examples.count('Class' in examples[0]) == len(examples[0].items()):
         return default
     else:
-        infogain=0
-
-        print( examples.items())
+        best,entropies=findbest(examples)
+        print(best,entropies)
         tree= Node()
         tree.label=tree
         return default
 
+
+
+    #for i in range(0, len(examples[0].items())-1):# i is number of attributes in each example
+        #attributeValues = []
+        #attributeClass = []
+        #for j in range (0, len(examples)):     # j is number of examples
+                                                       # examples[1].items()[i][1] = value of attribute i
+            #attributename=examples[1].items()[i][0] #= name of attribute i
+            #attributeValues.append(examples[j].items()[i][1])
+            #attributeClass.append(examples[j].items()[len(examples[j].items()) - 1][1])
+        #print(attributename,attributeValues,'class', attributeClass)
+    #one,two=classcount(examples)
+    #print(one,two)
+    #three=returnmaxclass(one,two)
+    #print(three)
+    #print(max(two), sum(two))
+    #a=entropy(max(two),sum(two))
+    #print(a)
 
 def classcount(examples):
     classes = []
@@ -104,7 +80,29 @@ def returnmaxclass(uniqueclass, uniqueclasscount):
     maxclassnum=uniqueclasscount[x]
     return maxclassnum
 
-
+def findbest(examples):
+    allentropies=[]
+    for i in range(0,len(examples[0].items())-1):
+        attvalues=[]
+        attnum=i
+        for j in range(0,len(examples)):
+            attvalues.append(examples[j].items()[i][1])
+            uniqueatt=list(set(attvalues))
+            entropies=[]
+        for j in range(0,len(uniqueatt)):
+            ex=attexamples(attnum,uniqueatt[j],examples)
+            x,y=classcount(ex)
+            #print(ex,x,y)
+            ax=returnmaxclass(x,y)
+            #print(ax, sum(y))
+            entropies.append(entropy(ax,sum(y)))
+            #print(entropies)
+        entrope=sum(entropies)
+        allentropies.append(entrope)
+    #print(allentropies)
+    bestsplit=max(allentropies)
+    ind=allentropies.index(bestsplit)
+    return(examples[0].items()[ind][0],allentropies)
 
 
 def prune(node, examples):
