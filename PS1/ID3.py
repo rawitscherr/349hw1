@@ -13,11 +13,29 @@ def ID3(examples, default):
     elif examples.count('Class' in examples[0]) == len(examples[0].items()): #need to check for no nontrivial splits
         return default
     else:
-        best,entropies=findbest(examples)
-        print(best,entropies)
+        best,bestname,entropies=findbest(examples)
+        #print(best,entropies)
         tree= Node()
-        tree.label=tree
-        return default
+        tree.label=best
+        attvals=[]
+        for i in range(0,len(examples)):
+            attvals.append(examples[i].items()[best][1])
+        for i in range(0,len(set(attvals))):
+            #print(attexamples(best,i,examples))
+            #print(attexamples(best,list(set(attvals))[i],examples))
+            tree.children.update({list(set(attvals))[i]:best})
+            #tree.children.update({'a':1})
+        print(tree.children)
+        for i in range(0,len(tree.children.items())):
+            ates=attexamples(best,list(set(attvals))[i],examples)
+            print(ates)
+            for j in range(0,len(ates)):
+                ates[j].pop(bestname,None)
+            #ID3(ates,default)
+            print(ates)
+            print(i,'aOK')
+        #print(prop)
+        return tree
 
 
 
@@ -102,8 +120,8 @@ def findbest(examples):
     #print(allentropies)
     bestsplit=max(allentropies)
     ind=allentropies.index(bestsplit)
-    return(examples[0].items()[ind][0],allentropies)
-
+    return(ind,examples[0].items()[ind][0],allentropies)
+    #return(ind,allentropies)
 
 def prune(node, examples):
   '''
@@ -123,79 +141,3 @@ def evaluate(node, example):
   Takes in a tree and one example.  Returns the Class value that the tree
   assigns to the example.
   '''
-
-
-
-
-
-
-def ID4(examples, default):
-#      Takes in an array of examples, and returns a tree (an instance of Node)
-#      trained on the examples.  Each example is a dictionary of attribute:value pairs,
-#      and the target class variable is a special attribute with the name "Class".
-#      Any missing attributes are denoted with a value of "?"
-
-
-
-
-    uniqueclass, uniqueclasscount = classcount(examples)
-    classMODE = returnmaxclass(uniqueclass, uniqueclasscount)
-    newDefault = classMODE
-
-
-    entropies = []
-    for i in range(0, len(examples[0].items())-1): # i is number of attributes in each example
-        attributeValues = []
-        attributeClass = []
-        attributename = examples[1].items()[i][0]
-
-        for j in range (0, len(examples)):     # j is number of examples
-            attributeValues.append(examples[j].items()[i][1])
-            attributeClass.append(examples[j].items()[len(examples[j].items()) - 1][1])
-
-        for j in range (0, len(attributeValues)): # for each distinct value of attribute i (ex: all the cases where a = 1)
-          # find most common classification among cases where (a = 1)
-          listofcases = []
-          for k in range(0, len(examples)):
-
-            #print(attributeValues[j], examples[k].items()[i][1])
-            if attributeValues[j] == examples[k].items()[i][1]:
-              listofcases.append(examples[i])
-            #print(i,j,k,listofcases)
-            #uninquecases = set(listofcases)
-            #x, y = classcount(listofcases)
-            #MODE = returnmaxclass(x,y)
-            #entropies.append(entropy(max(y),sum(y)))
-    v=attexamples(0,1,examples)
-    print(v)
-
-
-
-
-        #print(attributename,attributeValues,'class', attributeClass)
-
-
-
-
-
-
-
-    one,two=classcount(examples)
-    #print(one,two)
-    three=returnmaxclass(one,two)
-    #print(three)
-    #print(max(two), sum(two))
-    a=entropy(max(two),sum(two))
-    #print(a)
-
-    if examples == None:
-        return default
-    elif examples.count('Class' in examples[0]) == len(examples) or 'a':
-        return default
-    else:
-        infogain=0
-
-        print( examples.items())
-        tree= Node()
-        tree.label=tree
-        return default
