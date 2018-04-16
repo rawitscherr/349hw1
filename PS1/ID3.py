@@ -21,19 +21,16 @@ def ID3(examples, default):
         for i in range(0,len(examples)):
             attvals.append(examples[i].items()[best][1])
         for i in range(0,len(set(attvals))):
-            #print(attexamples(best,i,examples))
-            #print(attexamples(best,list(set(attvals))[i],examples))
             tree.children.update({list(set(attvals))[i]:best})
             #tree.children.update({'a':1})
         print(tree.children)
         for i in range(0,len(tree.children.items())):
-            ates=attexamples(best,list(set(attvals))[i],examples)
+            ates=attexamples(bestname,best,list(set(attvals))[i],examples)
             print(ates)
             for j in range(0,len(ates)):
                 ates[j].pop(bestname,None)
             #ID3(ates,default)
             print(ates)
-            print(i,'aOK')
         #print(prop)
         return tree
 
@@ -75,10 +72,10 @@ def classcount(examples):
         uniqueclasscount.append(counter)
     return uniqueclass, uniqueclasscount
 
-def attexamples(attribute,value,examples):
+def attexamples(attributename,attributeindex,value,examples):
     attex=[]
     for i in range(0,len(examples)):
-        if value==examples[i].items()[attribute][1]:
+        if value==examples[i].items()[attributeindex][1] and examples[i].items()[attributeindex][0]== attributename:
             attex.append(examples[i])
         #print(i,examples[i])
     return attex
@@ -108,7 +105,7 @@ def findbest(examples):
             uniqueatt=list(set(attvalues))
             entropies=[]
         for j in range(0,len(uniqueatt)):
-            ex=attexamples(attnum,uniqueatt[j],examples)
+            ex=attexamples(examples[0].items()[attnum][0],attnum,uniqueatt[j],examples)
             x,y=classcount(ex)
             #print(ex,x,y)
             ax=returnmaxclass(x,y)
