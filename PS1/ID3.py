@@ -6,7 +6,6 @@ def ID3(examples, default):
 #      trained on the examples.  Each example is a dictionary of attribute:value pairs,
 #      and the target class variable is a special attribute with the name "Class".
 #      Any missing attributes are denoted with a value of "?"
-    print(examples)
     if examples == None:
         return default
     elif 1 == len(examples[0].items()): #need to check for no nontrivial splits
@@ -148,4 +147,3 @@ def evaluate(node, example):
       if tree.children[i].label == example.items()[j]: ## reformat, this wont work as is
         evaluate(tree.children[i],example)
   return tree.classification
-
