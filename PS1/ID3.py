@@ -32,7 +32,7 @@ def ID3(examples, default):
             for j in range(0,len(ates)):
                 ates[j].pop(bestname,None)
             #ID3(ates,default)
-            print(ates)
+            #print(ates)
             ID3(ates,default)
         #print(prop)
         return tree
