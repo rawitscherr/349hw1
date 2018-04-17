@@ -10,7 +10,7 @@ def ID3(examples, default):
         return default
     elif 1 == len(examples[0].items()): #need to check for no nontrivial splits
         default=examples[0].items()[0][1]
-        print default
+        #print default
         return default
     else:
         findbest(examples)
@@ -24,7 +24,7 @@ def ID3(examples, default):
         for i in range(0,len(set(attvals))):
             tree.children.update({list(set(attvals))[i]:best})
             #tree.children.update({'a':1})
-        print(tree.children)
+        #print(tree.children)
         for i in range(0,len(tree.children.items())):
             ates=attexamples(bestname,best,list(set(attvals))[i],examples)
             #print(ates)
@@ -140,10 +140,12 @@ def evaluate(node, example):
   Takes in a tree and one example.  Returns the Class value that the tree
   assigns to the example.
   '''
-  if len(tree.children == 0):
-    return tree.classification
-  for i in range(0,len(tree.children)):
-    for j in range(0,len(example.items())):
-      if tree.children[i].label == example.items()[j]: ## reformat, this wont work as is
-        evaluate(tree.children[i],example)
-  return tree.classification
+  print(node.children)
+  if len(node.children) == 0:
+    return node.classification
+  #for i in range(0,len(node.children)):
+    #for j in range(0,len(node.items())):
+        #a=2
+      #if tree.children[i].label == example.items()[j]: ## reformat, this wont work as is
+        #evaluate(tree.children[i],example)
+  return node.classification
