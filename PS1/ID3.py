@@ -7,13 +7,14 @@ def ID3(examples, default):
 #      and the target class variable is a special attribute with the name "Class".
 #      Any missing attributes are denoted with a value of "?"
 
-    findbest(examples)
-    if examples == None or len(examples[0].items())==1:
-        default=examples[0].items()[0][1]
+    if examples == None:
         return default
-    elif examples.count('Class' in examples[0]) == len(examples[0].items()): #need to check for no nontrivial splits
+    elif 1 == len(examples[0].items()): #need to check for no nontrivial splits
+        default=examples[0].items()[0][1]
+        print default
         return default
     else:
+        findbest(examples)
         best,bestname,entropies=findbest(examples)
         #print(best,entropies)
         tree= Node()
@@ -27,7 +28,7 @@ def ID3(examples, default):
         print(tree.children)
         for i in range(0,len(tree.children.items())):
             ates=attexamples(bestname,best,list(set(attvals))[i],examples)
-            print(ates)
+            #print(ates)
             for j in range(0,len(ates)):
                 ates[j].pop(bestname,None)
             #ID3(ates,default)
