@@ -141,3 +141,11 @@ def evaluate(node, example):
   Takes in a tree and one example.  Returns the Class value that the tree
   assigns to the example.
   '''
+  if len(tree.children == 0):
+    return tree.classification
+  for i in range(0,len(tree.children)):
+    for j in range(0,len(example.items())):
+      if tree.children[i].label == example.items()[j]: ## reformat, this wont work as is
+        evaluate(tree.children[i],example)
+  return tree.classification
+
