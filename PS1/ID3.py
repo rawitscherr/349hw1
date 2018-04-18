@@ -9,15 +9,14 @@ def ID3(examples, default):
 #      Any missing attributes are denoted with a value of "?"
     if examples == None:
         return default
-    elif 1 == len(examples[0].items()): #need to check for no nontrivial splits
-        default=examples[0].items()[0][1]
-        return default
-    else:
-        best,bestname,entropies=findbest(examples)
-        a=Node()
-        tree=treeform(a,bestname,best,examples)
-        print(tree.label,tree.children[0].label,tree.children)
-        return tree
+    
+    checkTrivialCases(examples)
+
+    best,bestname,entropies=findbest(examples)
+    a=Node()
+    tree=treeform(a,bestname,best,examples)
+    print(tree.label,tree.children[0].label,tree.children)
+    return tree
 
 
 def treeform(node,bestname,best,examples):
@@ -112,6 +111,26 @@ def findbest(examples):
     ind=allentropies.index(bestsplit)
     return(ind,examples[0].items()[ind][0],allentropies)
     #return(ind,allentropies)
+
+
+def checkTrivialCases(examples):
+    UClassList, UCCounts = classcount(examples)
+    index = max(UCCounts).index()
+    mode = UClassList[index]
+    done = false
+    for i in range (0, len(examples)):
+      examples[i].pop("Class")
+    for i in range (0, len(examples)):
+      if done == true:
+        break
+      check = examples[i]
+      for j in range( (i + 1), len(examples) ):
+        if check != examples[j]:
+          done = true;
+          break
+    if done == false:
+      return mode
+
 
 def prune(node, examples):
   '''
