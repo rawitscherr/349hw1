@@ -16,18 +16,25 @@ def ID3(examples, default):
         findbest(examples)
         best,bestname,entropies=findbest(examples)
         tree= Node()
-        tree.label=best
+        tree.label=bestname
         attvals=[]
         for i in range(0,len(examples)):
             attvals.append(examples[i].items()[best][1])
+        #trees(tree,bestname,attvals)
         for i in range(0,len(set(attvals))):
-            tree.children.update({list(set(attvals))[i]:bestname})
-            #tree.children.update({'a':1})
-        for i in range(0,len(tree.children.items())):
+            a=Node()
+            a.label=bestname
+            tree.children.update({list(set(attvals))[i]:a})
+            #print(tree.children.items()[0][1].label)
+        for i in range(0,len(tree.children)):
             ates=attexamples(bestname,best,list(set(attvals))[i],examples)
             for j in range(0,len(ates)):
                 ates[j].pop(bestname,None)
             ID3(ates,default)
+            print tree.label
+            print(tree.children.items()[i][0],tree.children.items()[i][1].label)
+
+        print(tree.children.items()[0][1].children)
         return tree
 
 
@@ -48,6 +55,14 @@ def ID3(examples, default):
     #print(max(two), sum(two))
     #a=entropy(max(two),sum(two))
     #print(a)
+
+def trees(node,bestname,attributevalues):
+    node.label=bestname
+    for i in range(0,len(set(attributevalues))):
+        g=Node()
+        node.children.update({list(set(attributevalues))[i]:g})
+        trees(node.children[i])
+    return node
 
 def classcount(examples):
     classes = []
