@@ -33,9 +33,9 @@ def treeform(node,bestname,best,examples):
                 #print(ates,len(ates))
             if len(ates)>1:
                 if len(ates[0].items())>1:
+                    bee=Node()
                     best,bestname,entropies=findbest(ates)
-                        #pdb.set_trace()
-                    node.children.update({list(set(attvals))[i]:treeform(node,bestname,best,ates)})
+                    node.children.update({list(set(attvals))[i]:treeform(bee,bestname,best,ates)})
             else:
                 node.children.update({ates[0]:Node()})
                 node.children[i].classification=ates[0].get('Class')
