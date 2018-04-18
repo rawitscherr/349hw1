@@ -13,28 +13,19 @@ def ID3(examples, default):
         default=examples[0].items()[0][1]
         return default
     else:
-        findbest(examples)
         best,bestname,entropies=findbest(examples)
         tree= Node()
-        tree.label=bestname
         attvals=[]
         for i in range(0,len(examples)):
             attvals.append(examples[i].items()[best][1])
-        #trees(tree,bestname,attvals)
-        for i in range(0,len(set(attvals))):
-            a=Node()
-            a.label=bestname
-            tree.children.update({list(set(attvals))[i]:a})
-            #print(tree.children.items()[0][1].label)
+        #for i in range(0,len(set(attvals))):
+            #a=Node()
+            #a.label=bestname
         for i in range(0,len(tree.children)):
             ates=attexamples(bestname,best,list(set(attvals))[i],examples)
             for j in range(0,len(ates)):
                 ates[j].pop(bestname,None)
             ID3(ates,default)
-            print tree.label
-            print(tree.children.items()[i][0],tree.children.items()[i][1].label)
-
-        print(tree.children.items()[0][1].children)
         return tree
 
 
