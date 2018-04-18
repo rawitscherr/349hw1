@@ -47,14 +47,6 @@ def ID3(examples, default):
     #a=entropy(max(two),sum(two))
     #print(a)
 
-def trees(node,bestname,attributevalues):
-    node.label=bestname
-    for i in range(0,len(set(attributevalues))):
-        g=Node()
-        node.children.update({list(set(attributevalues))[i]:g})
-        trees(node.children[i])
-    return node
-
 def classcount(examples):
     classes = []
     numExamples = len(examples)
@@ -134,6 +126,26 @@ def test(node, examples):
   Takes in a trained tree and a test set of examples.  Returns the accuracy (fraction
   of examples the tree classifies correctly).
   '''
+  total = len(examples)
+  correct = 0
+  for i in range (0, len(examples)):
+    c = traverse(node, examples[i])
+    if c == examples[i].get("Class"):
+      correct = correct + 1
+  return float(correct)/total
+
+
+def traverse(node, example):
+  '''
+  Helper function for test
+  '''
+  if len(node.children) == 0:
+    return node.classification
+  else:
+    attsplit = node.label
+    attvalue = example.get(attsplit)
+    traverse(node.children.get(attvalue), example) 
+
 
 
 def evaluate(node, example):
@@ -142,11 +154,9 @@ def evaluate(node, example):
   assigns to the example.
   '''
   #print(node.children)
-  #if len(node.children) == 0:
-    #return node.classification
-  #for i in range(0,len(node.children)):
-    #for j in range(0,len(node.items())):
-        #a=2
-      #if tree.children[i].label == example.items()[j]: ## reformat, this wont work as is
-        #evaluate(tree.children[i],example)
- # return node.classification
+  if len(node.children) == 0:
+    return node.classification
+  else:
+    attname = node.label
+    attvalue = example.get(attname)
+    evaluate(node.children.get(attvalue), example)
