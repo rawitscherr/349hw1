@@ -14,17 +14,34 @@ def ID3(examples, default):
         return default
     else:
         best,bestname,entropies=findbest(examples)
-        tree= Node()
-        attvals=[]
-        for i in range(0,len(examples)):
-            attvals.append(examples[i].items()[best][1])
+        a=Node()
+        tree=treeform(a,bestname,best,examples)
+        print(tree.label,tree.children[0].label,tree.children)
+        return tree
 
-        for i in range(0,len(tree.children)):
+
+def treeform(node,bestname,best,examples):
+    node.label=bestname
+    attvals=[]
+    if len(examples)>1:
+        for i in range(0,len(examples)):
+            attvals.append(examples[i].get(bestname))
+        for i in range(0,len(set(attvals))):
             ates=attexamples(bestname,best,list(set(attvals))[i],examples)
             for j in range(0,len(ates)):
                 ates[j].pop(bestname,None)
-            ID3(ates,default)
-        return tree
+                #print(ates,len(ates))
+            if len(ates)>1:
+                if len(ates[0].items())>1:
+                    best,bestname,entropies=findbest(ates)
+                        #pdb.set_trace()
+                    node.children.update({list(set(attvals))[i]:treeform(node,bestname,best,ates)})
+            else:
+                node.children.update({ates[0]:Node()})
+                node.children[i].classification=ates[0].get('Class')
+    else:
+        node.classification=examples.get('Class')
+    return node
 
 
 def classcount(examples):
@@ -72,6 +89,7 @@ def returnmaxclass(uniqueclass, uniqueclasscount):
 
 def findbest(examples):
     allentropies=[]
+
     for i in range(0,len(examples[0].items())-1):
         attvalues=[]
         attnum=i
