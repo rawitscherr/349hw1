@@ -10,7 +10,6 @@ def ID3(examples, default):
 #      Any missing attributes are denoted with a value of "?"
     if examples == None:
         return default
-
     #checkTrivialCases(examples)
 
     best,bestname,entropies=findbest(examples)
