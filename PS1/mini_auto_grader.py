@@ -2,6 +2,7 @@ import ID3, parse, random, unit_tests
 
 def mini_grader():
   unit_tests.testID3AndTest()
+  #unit_tests.testPruningOnHouseData("/Users/ryanrawitscher/Desktop/349hw1/PS1/house_votes_84.data")
   data = [dict(a=1, b=0, Class=1), dict(a=1, b=1, Class=1)]
   try:
     tree = ID3.ID3(data, 0)

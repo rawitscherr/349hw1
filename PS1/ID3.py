@@ -11,8 +11,8 @@ def ID3(examples, default):
     if examples == None:
         return default
     #checkTrivialCases(examples)
-
     best,bestname,entropies=findbest(examples)
+    print examples
     tree=treeform(bestname,best,examples)
     return tree
 
@@ -33,7 +33,6 @@ def treeform(bestname,best,examples):
                 newnode.classification=attributeexamples[0].get('Class')
                 node.children.update({list(set(node.attvals))[i]:newnode})
             else:
-                #print(attributeexamples)
                 best1,bestname1,entropies1=findbest(attributeexamples)
                 node.children.update({list(set(node.attvals))[i]:treeform(bestname1,best1,attributeexamples)})
     else:
@@ -147,6 +146,7 @@ def test(node, examples):
   Takes in a trained tree and a test set of examples.  Returns the accuracy (fraction
   of examples the tree classifies correctly).
   '''
+  #print(examples)
   total = len(examples)
   correct = 0
   for i in range (0, len(examples)):
@@ -164,7 +164,6 @@ def traverse(node, example):
   Helper function for test
   '''
   if len(node.children.items()) == 0:
-    'class'
     return node.classification
   else:
     attsplit = node.label
@@ -173,7 +172,6 @@ def traverse(node, example):
     attvalue = example.get(attsplit)
     #print attvalue,node.children
     if node.children.get(attvalue)==None:
-        print 'mode'
         return node.mode
     return traverse(node.children.get(attvalue), example)
 

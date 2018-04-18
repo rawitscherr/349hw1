@@ -33,10 +33,10 @@ def testID3AndTest():
   testData = [dict(a=1, b=0, c=1, Class=1), dict(a=1, b=1, c=1, Class=1),
   dict(a=0, b=0, c=1, Class=0), dict(a=0, b=1, c=1, Class=0)]
   tree = ID3.ID3(trainData, 0)
+  #print(trainData)
   fails = 0
   if tree != None:
-    acc = ID3.test(tree, [dict(a=1, b=0, c=0, Class=1), dict(a=1, b=1, c=0, Class=1),
-    dict(a=0, b=0, c=0, Class=0), dict(a=0, b=1, c=0, Class=1)])
+    acc = ID3.test(tree, trainData)
     if acc == 1.0:
       print "testing on train data succeeded."
     else:
