@@ -9,37 +9,37 @@ def ID3(examples, default):
 #      Any missing attributes are denoted with a value of "?"
     if examples == None:
         return default
-    
-    checkTrivialCases(examples)
+
+    #checkTrivialCases(examples)
 
     best,bestname,entropies=findbest(examples)
-    a=Node()
-    tree=treeform(a,bestname,best,examples)
-    print(tree.label,tree.children[0].label,tree.children)
+    tree=treeform(bestname,best,examples)
     return tree
 
 
-def treeform(node,bestname,best,examples):
+def treeform(bestname,best,examples):
+    node=Node()
     node.label=bestname
-    attvals=[]
-    if len(examples)>1:
+    if len(examples)!=1 and examples[0].items()[0][0]!='Class':
         for i in range(0,len(examples)):
-            attvals.append(examples[i].get(bestname))
-        for i in range(0,len(set(attvals))):
-            ates=attexamples(bestname,best,list(set(attvals))[i],examples)
-            for j in range(0,len(ates)):
-                ates[j].pop(bestname,None)
-                #print(ates,len(ates))
-            if len(ates)>1:
-                if len(ates[0].items())>1:
-                    bee=Node()
-                    best,bestname,entropies=findbest(ates)
-                    node.children.update({list(set(attvals))[i]:treeform(bee,bestname,best,ates)})
+            node.attvals.append(examples[i].get(bestname))
+        for i in range(0,len(set(node.attvals))):
+            attributeexamples=attexamples(bestname,best,list(set(node.attvals))[i],examples)
+            for j in range(0,len(attributeexamples)):
+                attributeexamples[j].pop(bestname,None)
+            #print(attributeexamples,len(attributeexamples))
+            #print len(attributeexamples[0].items()),attributeexamples[0].items()
+
+            if len(attributeexamples[0].items())==1:
+                newnode=Node()
+                newnode.classification=attributeexamples[0].get('Class')
+                node.children.update({list(set(node.attvals))[i]:newnode})
             else:
-                node.children.update({ates[0]:Node()})
-                node.children[i].classification=ates[0].get('Class')
+                #print(attributeexamples)
+                best1,bestname1,entropies1=findbest(attributeexamples)
+                node.children.update({list(set(node.attvals))[i]:treeform(bestname1,best1,attributeexamples)})
     else:
-        node.classification=examples.get('Class')
+        node.classification=examples[0].get('Class')
     return node
 
 
@@ -68,7 +68,6 @@ def attexamples(attributename,attributeindex,value,examples):
         if len(examples[i].items())>attributeindex:
             if value==examples[i].items()[attributeindex][1] and examples[i].items()[attributeindex][0] == attributename:
                 attex.append(examples[i])
-        #print(i,examples[i])
     return attex
 
 def entropy(x,y):
@@ -78,7 +77,6 @@ def entropy(x,y):
       hprior = temp1 * math.log(temp1,2)
     else:
         hprior = temp1 * math.log(temp1,2) + temp2 * math.log(temp2, 2)
-        #hprior=math.log(temp1,2)
     return hprior
 
 def returnmaxclass(uniqueclass, uniqueclasscount):
@@ -88,7 +86,6 @@ def returnmaxclass(uniqueclass, uniqueclasscount):
 
 def findbest(examples):
     allentropies=[]
-
     for i in range(0,len(examples[0].items())-1):
         attvalues=[]
         attnum=i
@@ -99,18 +96,13 @@ def findbest(examples):
         for j in range(0,len(uniqueatt)):
             ex=attexamples(examples[0].items()[attnum][0],attnum,uniqueatt[j],examples)
             x,y=classcount(ex)
-            #print(ex,x,y)
             ax=returnmaxclass(x,y)
-            #print(ax, sum(y))
             entropies.append(entropy(ax,sum(y)))
-            #print(entropies)
         entrope=sum(entropies)
         allentropies.append(entrope)
-    #print(allentropies)
     bestsplit=max(allentropies)
     ind=allentropies.index(bestsplit)
     return(ind,examples[0].items()[ind][0],allentropies)
-    #return(ind,allentropies)
 
 
 def checkTrivialCases(examples):
@@ -170,10 +162,9 @@ def evaluate(node, example):
   Takes in a tree and one example.  Returns the Class value that the tree
   assigns to the example.
   '''
-  #print(node.children)
-  if len(node.children) == 0:
-    return node.classification
-  else:
+  if len(node.children) > 0:
     attname = node.label
     attvalue = example.get(attname)
-    evaluate(node.children.get(attvalue), example)
+    return evaluate(node.children.get(attvalue), example)
+  else:
+    return node.classification

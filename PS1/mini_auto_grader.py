@@ -7,7 +7,7 @@ def mini_grader():
   try:
     tree = ID3.ID3(data, 0)
     if tree != None:
-      ans = ID3.evaluate(tree, dict(a=1, b=0))
+      ans= ID3.evaluate(tree, dict(a=1, b=0))
       if ans != 1:
         print "ID3 test 1 failed."
       else:
