@@ -1,4 +1,5 @@
 from node import Node
+import pdb
 import math
 
 def ID3(examples, default):
@@ -10,30 +11,23 @@ def ID3(examples, default):
         return default
     elif 1 == len(examples[0].items()): #need to check for no nontrivial splits
         default=examples[0].items()[0][1]
-        #print default
         return default
     else:
         findbest(examples)
         best,bestname,entropies=findbest(examples)
-        #print(best,entropies)
         tree= Node()
         tree.label=best
         attvals=[]
         for i in range(0,len(examples)):
             attvals.append(examples[i].items()[best][1])
         for i in range(0,len(set(attvals))):
-            tree.children.update({list(set(attvals))[i]:best})
+            tree.children.update({list(set(attvals))[i]:bestname})
             #tree.children.update({'a':1})
-        #print(tree.children)
         for i in range(0,len(tree.children.items())):
             ates=attexamples(bestname,best,list(set(attvals))[i],examples)
-            #print(ates)
             for j in range(0,len(ates)):
                 ates[j].pop(bestname,None)
-            #ID3(ates,default)
-            #print(ates)
             ID3(ates,default)
-        #print(prop)
         return tree
 
 
@@ -77,8 +71,9 @@ def classcount(examples):
 def attexamples(attributename,attributeindex,value,examples):
     attex=[]
     for i in range(0,len(examples)):
-        if value==examples[i].items()[attributeindex][1] and examples[i].items()[attributeindex][0]== attributename:
-            attex.append(examples[i])
+        if len(examples[i].items())>attributeindex:
+            if value==examples[i].items()[attributeindex][1] and examples[i].items()[attributeindex][0] == attributename:
+                attex.append(examples[i])
         #print(i,examples[i])
     return attex
 
@@ -140,12 +135,12 @@ def evaluate(node, example):
   Takes in a tree and one example.  Returns the Class value that the tree
   assigns to the example.
   '''
-  print(node.children)
-  if len(node.children) == 0:
-    return node.classification
+  #print(node.children)
+  #if len(node.children) == 0:
+    #return node.classification
   #for i in range(0,len(node.children)):
     #for j in range(0,len(node.items())):
         #a=2
       #if tree.children[i].label == example.items()[j]: ## reformat, this wont work as is
         #evaluate(tree.children[i],example)
-  return node.classification
+ # return node.classification
