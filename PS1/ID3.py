@@ -18,9 +18,7 @@ def ID3(examples, default):
         attvals=[]
         for i in range(0,len(examples)):
             attvals.append(examples[i].items()[best][1])
-        #for i in range(0,len(set(attvals))):
-            #a=Node()
-            #a.label=bestname
+
         for i in range(0,len(tree.children)):
             ates=attexamples(bestname,best,list(set(attvals))[i],examples)
             for j in range(0,len(ates)):
@@ -28,24 +26,6 @@ def ID3(examples, default):
             ID3(ates,default)
         return tree
 
-
-
-    #for i in range(0, len(examples[0].items())-1):# i is number of attributes in each example
-        #attributeValues = []
-        #attributeClass = []
-        #for j in range (0, len(examples)):     # j is number of examples
-                                                       # examples[1].items()[i][1] = value of attribute i
-            #attributename=examples[1].items()[i][0] #= name of attribute i
-            #attributeValues.append(examples[j].items()[i][1])
-            #attributeClass.append(examples[j].items()[len(examples[j].items()) - 1][1])
-        #print(attributename,attributeValues,'class', attributeClass)
-    #one,two=classcount(examples)
-    #print(one,two)
-    #three=returnmaxclass(one,two)
-    #print(three)
-    #print(max(two), sum(two))
-    #a=entropy(max(two),sum(two))
-    #print(a)
 
 def classcount(examples):
     classes = []
@@ -144,7 +124,7 @@ def traverse(node, example):
   else:
     attsplit = node.label
     attvalue = example.get(attsplit)
-    traverse(node.children.get(attvalue), example) 
+    traverse(node.children.get(attvalue), example)
 
 
 
