@@ -20,6 +20,7 @@ def ID3(examples, default):
 def treeform(bestname,best,examples):
     node=Node()
     node.label=bestname
+    node.mode=MODE(examples)
     if len(examples)!=1 and examples[0].items()[0][0]!='Class':
         for i in range(0,len(examples)):
             node.attvals.append(examples[i].get(bestname))
@@ -42,6 +43,10 @@ def treeform(bestname,best,examples):
         node.classification=examples[0].get('Class')
     return node
 
+def MODE(examples):
+    a,b=classcount(examples)
+    ii=b.index(max(b))
+    return a[ii]
 
 def classcount(examples):
     classes = []
@@ -165,6 +170,8 @@ def evaluate(node, example):
   if len(node.children) > 0:
     attname = node.label
     attvalue = example.get(attname)
+    if node.children.get(attvalue)==None:
+        return node.mode
     return evaluate(node.children.get(attvalue), example)
   else:
     return node.classification

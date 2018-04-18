@@ -4,6 +4,7 @@ class Node:
     self.children = {}
     self.attvals = []
     self.classification = 0
+    self.mode = 0
 
 
 	# you may want to add additional fields here...
