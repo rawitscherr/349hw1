@@ -1,9 +1,8 @@
-import ID3, parse, random
+import ID3, parse, random, unit_tests
 
 def mini_grader():
-
+  unit_tests.testID3AndTest()
   data = [dict(a=1, b=0, Class=1), dict(a=1, b=1, Class=1)]
-
   try:
     tree = ID3.ID3(data, 0)
     if tree != None:

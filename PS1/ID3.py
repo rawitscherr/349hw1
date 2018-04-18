@@ -1,6 +1,7 @@
 from node import Node
 import pdb
 import math
+import unit_tests
 
 def ID3(examples, default):
 #      Takes in an array of examples, and returns a tree (an instance of Node)
@@ -28,9 +29,6 @@ def treeform(bestname,best,examples):
             attributeexamples=attexamples(bestname,best,list(set(node.attvals))[i],examples)
             for j in range(0,len(attributeexamples)):
                 attributeexamples[j].pop(bestname,None)
-            #print(attributeexamples,len(attributeexamples))
-            #print len(attributeexamples[0].items()),attributeexamples[0].items()
-
             if len(attributeexamples[0].items())==1:
                 newnode=Node()
                 newnode.classification=attributeexamples[0].get('Class')
@@ -91,6 +89,10 @@ def returnmaxclass(uniqueclass, uniqueclasscount):
 
 def findbest(examples):
     allentropies=[]
+    #for i in range(0,len(examples[0].items())-1):
+        #testor=[]
+        #for i in range(0,len(examples)):
+            #testor.append(examples[i].get)
     for i in range(0,len(examples[0].items())-1):
         attvalues=[]
         attnum=i
@@ -105,6 +107,12 @@ def findbest(examples):
             entropies.append(entropy(ax,sum(y)))
         entrope=sum(entropies)
         allentropies.append(entrope)
+    for i in range(0,len(allentropies)):
+        atts=[]
+        for j in range(0,len(examples)):
+            atts.append(examples[j].items()[i][1])
+        if len(set(atts))==1:
+            allentropies[i]=allentropies[i]-1.1
     bestsplit=max(allentropies)
     ind=allentropies.index(bestsplit)
     return(ind,examples[0].items()[ind][0],allentropies)
@@ -143,9 +151,12 @@ def test(node, examples):
   total = len(examples)
   correct = 0
   for i in range (0, len(examples)):
+    #print(examples[i])
     c = traverse(node, examples[i])
     if c == examples[i].get("Class"):
       correct = correct + 1
+    #else:
+        #print examples[i],c,examples[i].get("Class")
   return float(correct)/total
 
 
@@ -153,12 +164,19 @@ def traverse(node, example):
   '''
   Helper function for test
   '''
-  if len(node.children) == 0:
+  if len(node.children.items()) == 0:
+    'class'
     return node.classification
   else:
     attsplit = node.label
+    #print(attsplit)
+    #print(example,example.get(attsplit))
     attvalue = example.get(attsplit)
-    traverse(node.children.get(attvalue), example)
+    #print attvalue,node.children
+    if node.children.get(attvalue)==None:
+        print 'mode'
+        return node.mode
+    return traverse(node.children.get(attvalue), example)
 
 
 
