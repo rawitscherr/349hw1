@@ -100,6 +100,27 @@ def prune(node, examples):
   Takes in a trained tree and a validation set of examples.  Prunes nodes in order
   to improve accuracy on the validation data; the precise pruning strategy is up to you.
   '''
+  baseAccuracy = test(node, examples)
+  newTree = pruneTree(node)
+  newAccuracy = test(newTree, examples)
+  if newAccuracy >= baseAccuracy:
+    return prune(newTree, examples)
+  else:
+    return node
+
+
+def pruneTree(node):
+  numchildren = len(node.children)
+  if numchildren == 0:
+    return node
+  for i in range(0, numchildren):
+    numGrandChildren = len(node.children.items()[i][1].children)
+    if numGrandChildren == 0:
+      node.children.pop(node.children.items()[i][0])
+      return node
+    else: 
+      pruneTree(node.children.items()[i][1])
+  
 
 def test(node, examples):
   '''
