@@ -61,8 +61,8 @@ def testPruningOnHouseData(inFile):
   data = parse.parse(inFile)
   for i in range(100):
     random.shuffle(data)
-    train = data[:len(data)/2]
-    valid = data[len(data)/2:3*len(data)/4]
+    train = data[:20]
+    valid = data[20:3*len(data)/4]
     test = data[3*len(data)/4:]
 
     tree = ID3.ID3(train, 'democrat')

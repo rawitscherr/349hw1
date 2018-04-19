@@ -123,10 +123,11 @@ def pruneTree(node):
     numGrandChildren = len(node.children.items()[i][1].children)
     if numGrandChildren == 0:
       node.children.pop(node.children.items()[i][0])
+      #print node
       return node
-    else: 
-      pruneTree(node.children.items()[i][1])
-  
+    else:
+      return pruneTree(node.children.items()[i][1])
+
 
 def test(node, examples):
   '''
@@ -149,7 +150,7 @@ def traverse(node, example):
   '''
   Helper function for test
   '''
-  if len(node.children.items()) == 0:
+  if node.children == {}:
     return node.classification
   else:
     attsplit = node.label
