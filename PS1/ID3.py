@@ -75,7 +75,7 @@ def findbest(examples):
         for j in range(0,len(examples)):
             atts.append(examples[j].get(attributelist[i]))
         if len(set(atts))==1:
-            allentropies[i]=allentropies[i]-1.1
+            allentropies[i]=allentropies[i]-5
     bestsplit=max(allentropies)
     ind=allentropies.index(bestsplit)
     return(attributelist[ind],max(allentropies))
@@ -84,7 +84,13 @@ def treeform(bestname,examples):
     node=Node()
     node.label=bestname
     node.classification=MODE(examples)
-    if len(examples)!=1:
+    allclasses=[]
+    for i in range(0,len(examples)):
+        allclasses.append(examples[i].get('Class'))
+    x,y=findbest(examples)
+    #print x,y
+    if len(examples)!=1 and len(set(allclasses))!=1 and y>-2:
+        #print 'pass'
         for i in range(0,len(examples)):
             node.attvals.append(examples[i].get(bestname))
         for i in range(0,len(set(node.attvals))):
@@ -129,7 +135,7 @@ def traverse(node, example):
     attvalue = example.get(attsplit)
     #print attvalue,node.children
     if node.children.get(attvalue)==None:
-        return node.mode
+        return node.classification
     return traverse(node.children.get(attvalue), example)
 
 def evaluate(node, example):

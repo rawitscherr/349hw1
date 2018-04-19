@@ -5,13 +5,12 @@ def mini_grader():
   data = [dict(a=1, b=0, Class=1), dict(a=1, b=1, Class=1)]
   unit_tests.testID3AndEvaluate()
   unit_tests.testID3AndTest()
-  #unit_tests.testPruningOnHouseData('/Users/ryanrawitscher/Downloads/PS1/house_votes_84.data')
+  unit_tests.testPruningOnHouseData('/Users/ryanrawitscher/Desktop/349hw1/PS1/house_votes_84.data')
   try:
     tree = ID3.ID3(data, 0)
     if tree != None:
       ans = ID3.evaluate(tree, dict(a=1, b=0))
       if ans != 1:
-        #print ans
         print "ID3 test 1 failed."
       else:
         print "ID3 test 1 succeeded."
