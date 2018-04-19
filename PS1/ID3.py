@@ -2,6 +2,7 @@ from node import Node
 import pdb
 import math
 import unit_tests
+import copy
 
 def ID3(examples, default):
 #      Takes in an array of examples, and returns a tree (an instance of Node)
@@ -12,8 +13,10 @@ def ID3(examples, default):
         return default
     #checkTrivialCases(examples)
     best,bestname,entropies=findbest(examples)
-    print examples
+    #print examples
+    e=copy.deepcopy(examples)
     tree=treeform(bestname,best,examples)
+    examples=e
     return tree
 
 
@@ -140,6 +143,12 @@ def prune(node, examples):
   Takes in a trained tree and a validation set of examples.  Prunes nodes in order
   to improve accuracy on the validation data; the precise pruning strategy is up to you.
   '''
+  #acc=test(node,examples)
+  #while(node.children!=None):
+    #for i in range(0,len(node.children)):
+        #node.children
+        #node=node.children
+  return node
 
 def test(node, examples):
   '''
